@@ -3,6 +3,31 @@
 **Union-Find--based Financial Anomaly Engine**\
 *A Graph-Oriented Anti-Money Laundering Framework*
 
+
+UF-FAE(V, E, R, s):
+
+    1. 初始化 Union-Find 結構 UF，元素為所有帳戶 v ∈ V
+
+    2. 對於每一組實體等價關係 (x, y) ∈ R：
+           UF.union(x, y)
+
+    3. 初始化空的 component-level 有向圖 G'
+
+    4. 對於每一條有向交易邊 (u → v, w) ∈ E：
+           cu ← UF.find(u)
+           cv ← UF.find(v)
+
+           若 cu ≠ cv：
+               在 G' 中加入有向邊 (cu → cv, w)
+
+    5. source_component ← UF.find(s)
+
+    6. 在 G' 上，以 source_component 為起點執行 Dijkstra
+       計算每個 component 的最短距離 dist[·]
+
+    7. 回傳 dist
+
+
 ------------------------------------------------------------------------
 
 ## 📌 專案簡介（Overview）
